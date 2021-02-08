@@ -15,17 +15,16 @@ I like EXWM as a WM.
 
 ** Personal information
 
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (setq user-full-name "Alex Scott"
       user-mail-address "alex@alexscott.net")
 #+END_SRC
-
 
 ** Starting up
 
 Here's how we start:
 
-#+begin_src emacs-lisp 
+#+begin_src emacs-lisp
 ;; This sets up the load path so that we can override it
 (package-initialize)
 ;; (add-to-list 'load-path "/usr/local/share/emacs/site-lisp")
@@ -39,7 +38,7 @@ Here's how we start:
 
 
 *** Add package sources
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (unless (assoc-default "melpa" package-archives)
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t))
 (unless (assoc-default "org" package-archives)
@@ -50,7 +49,7 @@ Use =M-x package-refresh-contents= to reload the list of packages
 after adding these for the first time.
 
 *** Add my elisp directory and other files
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (add-to-list 'load-path "~/elisp")
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
@@ -67,7 +66,7 @@ after adding these for the first time.
 
 *** Libraries
 
-#+begin_src emacs-lisp 
+#+begin_src emacs-lisp
 (use-package dash :ensure t)
 (use-package diminish :ensure t)
 #+end_src
@@ -75,7 +74,7 @@ after adding these for the first time.
 
 *** Recent files
 
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (require 'recentf)
 (setq recentf-max-saved-items 200
       recentf-max-menu-items 15)
@@ -85,29 +84,45 @@ after adding these for the first time.
 
 *** Exwn
 #+begin_src emacs-lisp
-(use-package exwm)   
+(use-package exwm)
 (require 'exwm)
 (require 'exwm-config)
-(exwm-config-example) 
+(exwm-config-example)
 #+end_src
+
+
+*** Backups
+
+This is one of the things people usually want to change right away. By default, Emacs saves backup files in the current directory. These are the files ending in =~= that are cluttering up your directory lists. The following code stashes them all in =~/.config/emacs/backups=, where I can find them with =C-x C-f= (=find-file=) if I really need to.
+
+#+BEGIN_SRC emacs-lisp
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(setq delete-old-versions -1)
+(setq version-control t)
+(setq vc-make-backup-files t)
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
+#+END_SRC
 
 
 *** Babel and code blocks.
 Do we need ORG mode?
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 ;; (use-package org-tempo)
 #+END_SRC
 
 *** Magit
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (use-package magit
 :ensure t
-:bind 
+:bind
 ("C-c g" . magit-file-dispatch))
 #+END_SRC
 
 ***  Project navigation.
-#+begin_src emacs-lisp 
+#+begin_src emacs-lisp
 (use-package projectile
   :diminish projectile-mode
   :config
@@ -121,7 +136,7 @@ Do we need ORG mode?
 (use-package helm-projectile)
 #+end_src
 
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (use-package helm
   :diminish helm-mode
   :init
@@ -130,42 +145,42 @@ Do we need ORG mode?
     (require 'helm-for-files)
     (setq helm-candidate-number-limit 100)
     (setq helm-completing-read-handlers-alist
-          '((describe-function)
-            (consult-bookmark)
-            (consult-outline)
-            (org-refile)
-            (consult-line)
-            (consult-mark)
-            (consult-multi-occur)
-            (describe-variable)
-            (execute-extended-command)
-            (consult-yank)))
+	  '((describe-function)
+	    (consult-bookmark)
+	    (consult-outline)
+	    (org-refile)
+	    (consult-line)
+	    (consult-mark)
+	    (consult-multi-occur)
+	    (describe-variable)
+	    (execute-extended-command)
+	    (consult-yank)))
     ;; From https://gist.github.com/antifuchs/9238468
     (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
-          helm-input-idle-delay 0.01  ; this actually updates things
-                                        ; reeeelatively quickly.
-          helm-yas-display-key-on-candidate t
-          helm-quick-update t
-          helm-M-x-requires-pattern nil
-          helm-ff-skip-boring-files t)
+	  helm-input-idle-delay 0.01  ; this actually updates things
+					; reeeelatively quickly.
+	  helm-yas-display-key-on-candidate t
+	  helm-quick-update t
+	  helm-M-x-requires-pattern nil
+	  helm-ff-skip-boring-files t)
     (helm-mode))
   :config
   (defadvice helm-files-insert-as-org-links (around sacha activate)
     (insert (mapconcat (lambda (candidate)
-                         (org-link-make-string candidate))
-                       (helm-marked-candidates)
-                       "\n")))
+			 (org-link-make-string candidate))
+		       (helm-marked-candidates)
+		       "\n")))
   :bind (("C-c h" . helm-mini)
-         ("C-h a" . helm-apropos)
-         ("C-x C-b" . helm-buffers-list)
-         ("C-x b" . helm-buffers-list)
-         ("C-x C-f" . helm-find-files)
-         ("M-y" . helm-show-kill-ring)
-         ("C-x c o" . helm-occur)
-         ("C-x c s" . helm-swoop)
-         ("C-x c y" . helm-yas-complete)
-         ("C-x c Y" . helm-yas-create-snippet-on-region)
-         ("C-x c SPC" . helm-all-mark-rings)))
+	 ("C-h a" . helm-apropos)
+	 ("C-x C-b" . helm-buffers-list)
+	 ("C-x b" . helm-buffers-list)
+	 ("C-x C-f" . helm-find-files)
+	 ("M-y" . helm-show-kill-ring)
+	 ("C-x c o" . helm-occur)
+	 ("C-x c s" . helm-swoop)
+	 ("C-x c y" . helm-yas-complete)
+	 ("C-x c Y" . helm-yas-create-snippet-on-region)
+	 ("C-x c SPC" . helm-all-mark-rings)))
 (ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
 (use-package helm-ls-git)
 #+END_SRC
@@ -175,7 +190,7 @@ Do we need ORG mode?
 
 This promises to be a fast way to find things. Let's bind it to =Ctrl-Shift-S= to see if I can get used to that...
 
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 (use-package helm-swoop
   :bind
   (("C-S-s" . helm-swoop)
@@ -193,20 +208,31 @@ This promises to be a fast way to find things. Let's bind it to =Ctrl-Shift-S= t
   )
 #+END_SRC
 
+
+#+begin_src emacs-lisp
+(use-package pdf-tools
+  :ensure t
+  :magic ("%PDF" . pdf-view-mode)
+  :config
+  (pdf-tools-install :no-query))
+#+end_src
+
 ** Coding
 *** Javascript
 
 I like js2-mode.
 
-#+begin_src emacs-lisp 
+#+begin_src emacs-lisp
 (add-to-list 'auto-mode-alist '("\\.js\\'\\|\\.json\\'" . js2-mode))
 #+end_src
 
 Handy shortcuts:
-#+begin_src emacs-lisp 
+#+begin_src emacs-lisp
 (use-package js2-mode
   :mode "\\.js\\'")
 #+end_src
+*** Whitespace
 
-
-
+#+begin_src emacs-lisp
+(add-hook 'before-save-hook #'whitespace-cleanup)
+#+end_src
