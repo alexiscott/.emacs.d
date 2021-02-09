@@ -131,7 +131,6 @@ Enable y/n answers
 ;; (eval-after-load 'exwm (require 'exwm-firefox-core))
 #+end_src
 
-
 *** Backups
 
 This is one of the things people usually want to change right away. By default, Emacs saves backup files in the current directory. These are the files ending in =~= that are cluttering up your directory lists. The following code stashes them all in =~/.config/emacs/backups=, where I can find them with =C-x C-f= (=find-file=) if I really need to.
@@ -146,7 +145,6 @@ This is one of the things people usually want to change right away. By default, 
 (setq vc-make-backup-files t)
 (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
 #+END_SRC
-
 
 *** Babel and code blocks.
 Do we need ORG mode?
