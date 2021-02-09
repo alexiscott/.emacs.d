@@ -88,12 +88,25 @@ Enable y/n answers
 #+END_SRC
 
 
+*** SSH agent
+#+BEGIN_SRC emacs-lisp
+(use-package keychain-environment
+  :ensure t
+  :config (keychain-refresh-environment))
+#+END_SRC
+
+(use-package markdown-mode
+  :ensure t)
+
 *** Exwn
 #+begin_src emacs-lisp
 (use-package exwm)
 (require 'exwm)
 (require 'exwm-config)
 (exwm-config-example)
+(use-package exwm-firefox-core
+  :ensure t)
+;; (eval-after-load 'exwm (require 'exwm-firefox-core))
 #+end_src
 
 
