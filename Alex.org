@@ -9,7 +9,7 @@
 This emacs.d setup uses a literate programming style. A term coined by Donald Knuth.
 - In order to generate a init.el file, run org tangle C-c v t and the different Babel code blocks will create Alex.el. I then create a symlink for init.el from that in my .emacs.d folder.
 
-Inspired by Sacha Chua's work and her .emacs.d.
+Inspired by Sacha Chua's literate .emacs.d.
 
 I like EXWM as a WM.
 
@@ -63,6 +63,28 @@ after adding these for the first time.
 (setq load-prefer-newer t)
 #+END_SRC
 
+*** Environment
+It would be nice if we could set the default sync already set.
+Maybe loading timing.
+
+So just use keys that pulse audio provides.
+  C-x /
+  i set sync
+  m mute/unmute
+  v volume
+
+#+begin_src emacs-lisp
+
+  (use-package pulseaudio-control
+  :ensure t)
+
+  (pulseaudio-control-default-keybindings)
+  ;; (setq pulseaudio-control-default-source "0")
+  ;; (pulse-audio-control-select-sink-by-index)
+  ;; (pulseaudio-control-toggle-current-sink-mute)
+  ;; (pulseaudio-control-set-volume "70%")
+
+#+end_src
 
 *** Libraries
 
