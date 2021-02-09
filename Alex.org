@@ -225,6 +225,7 @@ Do we need ORG mode?
 					; reeeelatively quickly.
 	  helm-yas-display-key-on-candidate t
 	  helm-quick-update t
+	  helm-ff-file-name-history-use-recentf t
 	  helm-M-x-requires-pattern nil
 	  helm-ff-skip-boring-files t)
     (helm-mode))
