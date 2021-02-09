@@ -71,6 +71,12 @@ after adding these for the first time.
 (use-package diminish :ensure t)
 #+end_src
 
+*** Yes / no
+
+Enable y/n answers
+#+BEGIN_SRC emacs-lisp
+(fset 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
 
 *** Recent files
 
