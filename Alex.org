@@ -130,6 +130,29 @@ This is one of the things people usually want to change right away. By default, 
 Do we need ORG mode?
 #+BEGIN_SRC emacs-lisp
 ;; (use-package org-tempo)
+
+(setq org-confirm-babel-evaluate nil)
+
+  ; languages for org-babel support
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(
+   (shell . t)
+   (dot . t)
+   (latex .t)
+   (clojure . t)
+   (C . t)
+   (js . t)
+   (lisp . t)
+   (ruby . t)
+   (org . t)
+   (python . t)
+   (sql . t)
+   ))
+   #+end_src
+
+
 #+END_SRC
 
 *** Magit
