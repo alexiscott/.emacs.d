@@ -1,0 +1,61 @@
+#+TITLE: Test Org Document
+#+DATE: <2018-03-18 Sun>
+
+* With Features                                                    :tag:
+** Lots of different features
+Just testing out different behaviours in org mode.
+
+#+BEGIN_SRC c
+int main(void) {
+  return 0;
+}
+#+END_SRC
+
+#+BEGIN_SRC elisp
+(like code)
+
+;;;###autoload
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+And examples
+#+END_EXAMPLE
+
+* TODO And plain lists
+** TODO Something more
+** DONE Something else
+CLOSED: [2018-04-18 Wed 23:46]
+- Some lists are nice
+
+* DONE And emphasis
+- [ ] With a *checklist*
+- [X] And /italics/
+- [ ] And _underlines_
+- [ ] And [[https://github.com/kunalb/poet][links]]
+
+* [#A] And tables
+| Test |  Table |
+|------+--------|
+| With | Values |
+|    1 |      2 |
+|    3 |      4 |
+
+* Quotations are important too
+#+BEGIN_VERSE
+This is a verse
+#+END_VERSE
+
+#+BEGIN_QUOTE
+And this is a quote
+#+END_QUOTE
+
+* Agenda testing
+Update dates according to current date, but make sure to check
+** TODO Work to do today!
+SCHEDULED: <2019-01-03 Thu>
+** TODO Work to do in the future!
+SCHEDULED: <2019-01-04 Fri>
+** DONE Done work in the past!
+SCHEDULED: <2018-12-31 Mon>
+** TODO Undone work carrying over from the past!
+SCHEDULED: <2019-01-01 Tue>

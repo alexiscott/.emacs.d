@@ -308,8 +308,39 @@ Handy shortcuts:
 (use-package js2-mode
   :mode "\\.js\\'")
 #+end_src
+*** Paredit
+#+begin_src  emacs-lisp
+  (use-package paredit
+    :ensure t
+    :init
+    (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+    (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+    (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+    (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+    (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+    (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+    (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+
+    ;; eldoc-mode shows documentation in the minibuffer when writing code
+    ;; http://www.emacswiki.org/emacs/ElDoc
+    (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+    (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
+    (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode))
+#+end_src
 *** Whitespace
 
 #+begin_src emacs-lisp
 (add-hook 'before-save-hook #'whitespace-cleanup)
+#+end_src
+
+*** Theme
+#+begin_src emacs-lisp
+
+(setq custom-theme-directory "~/.emacs.d/poet")
+(add-hook 'text-mode-hook
+	   (lambda ()
+	    (variable-pitch-mode 1)))
+(load-theme 'poet t)
+
+
 #+end_src
