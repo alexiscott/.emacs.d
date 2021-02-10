@@ -264,6 +264,10 @@ Do we need ORG mode?
 (use-package helm-ls-git)
 #+END_SRC
 
+*** Auto revert
+#+begin_src emacs-lisp
+  (setq global-auto-revert-mode t)
+#+end_src
 
 *** Helm-swoop - quickly finding lines
 
