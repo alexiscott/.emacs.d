@@ -127,6 +127,8 @@ Enable y/n answers
 (use-package keychain-environment
   :ensure t
   :config (keychain-refresh-environment))
+;; Avoid repetition?
+(keychain-refresh-environment)
 #+END_SRC
 
 (use-package markdown-mode
