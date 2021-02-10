@@ -154,6 +154,8 @@ This is one of the things people usually want to change right away. By default, 
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
+
+(setq create-lockfiles nil) ;; No lock files.
 (setq delete-old-versions -1)
 (setq version-control t)
 (setq vc-make-backup-files t)
