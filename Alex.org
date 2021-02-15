@@ -332,7 +332,19 @@ This promises to be a fast way to find things. Let's bind it to =Ctrl-Shift-S= t
 I like js2-mode.
 
 #+begin_src emacs-lisp
-(add-to-list 'auto-mode-alist '("\\.js\\'\\|\\.json\\'" . js2-mode))
+
+  (setq js-indent-level 2)
+  (use-package tagedit
+  :ensure t)
+
+  (add-to-list 'auto-mode-alist '("\\.js\\'\\|\\.json\\'" . js2-mode))
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . js2-mode))
+
+  (eval-after-load "sgml-mode"
+    '(progn
+       (require 'tagedit)
+       (tagedit-add-paredit-like-keybindings)
+       (add-hook 'html-mode-hook (lambda () (tagedit-mode 1)))))
 #+end_src
 
 Handy shortcuts:
@@ -350,6 +362,8 @@ Handy shortcuts:
     (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
     (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
     (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+    (add-hook 'js-mode-hook               #'enable-paredit-mode)
+    (add-hook 'js2-mode-hook               #'enable-paredit-mode)
     (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
     (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
 
