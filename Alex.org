@@ -288,6 +288,12 @@ Do we need ORG mode?
 	 ("C-x c SPC" . helm-all-mark-rings)))
 (ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
 (use-package helm-ls-git)
+
+(setq helm-mini-default-sources '(helm-source-buffers-list
+				  helm-source-recentf
+				  helm-source-bookmarks
+				  helm-source-buffer-not-found))
+
 #+END_SRC
 
 *** Auto revert
