@@ -12,3 +12,6 @@ projectile.cache
 recentf
 transient/
 url/
+.emacs.desktop
+eww-bookmarks
+request

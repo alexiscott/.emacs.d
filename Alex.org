@@ -36,7 +36,6 @@ Here's how we start:
 (load custom-file t)
 #+END_SRC
 
-
 *** Add package sources
 #+BEGIN_SRC emacs-lisp
 (unless (assoc-default "melpa" package-archives)
@@ -170,6 +169,11 @@ Logout and in again to take affect.
 	([?\M-w] . [?\C-c])
 	([?\C-y] . [?\C-v])))
   #+end_src
+
+*** Super
+#+begin_src emacs-lisp
+  (load "~/super.el")
+#+end_src
 
 *** Backups
 
@@ -332,6 +336,16 @@ This promises to be a fast way to find things. Let's bind it to =Ctrl-Shift-S= t
   (pdf-tools-install :no-query))
 #+end_src
 
+*** Browser
+#+begin_src emacs-lisp
+(setq browse-url-browser-function 'eww-browse-url)
+#+end_src
+
+*** Org
+#+begin_src emacs-lisp
+(use-package ob-async
+:ensure t)
+#+end_src
 ** Coding
 *** Javascript
 
@@ -402,10 +416,10 @@ Handy shortcuts:
 (add-hook 'text-mode-hook
 	   (lambda ()
 	    (variable-pitch-mode 1)))
-(load-theme 'poet t)
+(load-theme 'poet-dark t)
 
 ;; Decent font size.
-(set-face-attribute 'default nil :height 130)
+(set-face-attribute 'default nil :height 140)
 #+end_src
 
 *** Clojure
@@ -495,17 +509,4 @@ Handy shortcuts:
      (define-key clojure-mode-map (kbd "C-M-r") 'cider-refresh)
      (define-key clojure-mode-map (kbd "C-c u") 'cider-user-ns)
      (define-key cider-mode-map (kbd "C-c u") 'cider-user-ns)))
-#+end_src
-
-
-* Misc
-#+begin_src emacs-lisp
-(defun die-tabs ()
-  (interactive)
-  (set-variable 'tab-width 2)
-  (mark-whole-buffer)
-  (untabify (region-beginning) (region-end))
-  (keyboard-quit))
-
-(show-paren-mode 1)
 #+end_src
