@@ -343,7 +343,13 @@ This promises to be a fast way to find things. Let's bind it to =Ctrl-Shift-S= t
 
 *** Browser
 #+begin_src emacs-lisp
-(setq browse-url-browser-function 'eww-browse-url)
+  ;; (setq browse-url-browser-function 'eww-browse-url)
+  (setq browse-url-browser-function '(
+  (".*youtube.*" . browse-url-firefox)
+  (".*github.com.*" . browse-url-firefox)
+  (".*mail.google.com.*" . browse-url-firefox)
+  (".*.harvestapp.com.*" . browse-url-firefox)
+  ("." . eww-browse-url)))
 #+end_src
 
 *** Org
