@@ -351,6 +351,7 @@ This promises to be a fast way to find things. Let's bind it to =Ctrl-Shift-S= t
   (".*mail.google.com.*" . browse-url-firefox)
   (".*.harvestapp.com.*" . browse-url-firefox)
   ("." . eww-browse-url)))
+(use-package org-noter)
 #+end_src
 
 *** Org
@@ -383,6 +384,12 @@ Handy shortcuts:
 #+begin_src emacs-lisp
 (use-package js2-mode
   :mode "\\.js\\'")
+#+end_src
+
+JS comint
+#+begin_src emacs-lisp
+(use-package js-comint
+:ensure t)
 #+end_src
 *** Paredit
 #+begin_src  emacs-lisp
