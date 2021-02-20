@@ -529,3 +529,8 @@ JS comint
      (define-key clojure-mode-map (kbd "C-c u") 'cider-user-ns)
      (define-key cider-mode-map (kbd "C-c u") 'cider-user-ns)))
 #+end_src
+*** Ediff
+#+begin_src emacs-lisp
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+;; (add-hook 'ediff-prepare-buffer-hook #'show-all)
+#+end_src
