@@ -333,13 +333,15 @@ This promises to be a fast way to find things. Let's bind it to =Ctrl-Shift-S= t
   )
 #+END_SRC
 
-
+*** PDFs
 #+begin_src emacs-lisp
 (use-package pdf-tools
   :ensure t
   :magic ("%PDF" . pdf-view-mode)
   :config
   (pdf-tools-install :no-query))
+
+(use-package org-noter)
 #+end_src
 
 *** Browser
@@ -351,7 +353,6 @@ This promises to be a fast way to find things. Let's bind it to =Ctrl-Shift-S= t
   (".*mail.google.com.*" . browse-url-firefox)
   (".*.harvestapp.com.*" . browse-url-firefox)
   ("." . eww-browse-url)))
-(use-package org-noter)
 #+end_src
 
 *** Org
