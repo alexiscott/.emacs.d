@@ -177,7 +177,8 @@ Logout and in again to take affect.
 
 *** Super
 #+begin_src emacs-lisp
-  (load "~/super.el")
+  (if  (file-exists-p "~/super.el")
+      (load "~/super.el"))
 #+end_src
 
 *** Backups
