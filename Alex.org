@@ -175,6 +175,12 @@ Logout and in again to take affect.
 	([?\C-y] . [?\C-v])))
   #+end_src
 
+  For this to have worked you will need to be able to suspend without a password:
+ #+begin_src emacs-lisp
+ (exwm-input-set-key (kbd "s-<f12>")
+ (lambda () (interactive) (start-process "" nil "sudo" "pm-suspend")))
+ #+end_src
+
 *** Super
 #+begin_src emacs-lisp
   (if  (file-exists-p "~/super.el")
