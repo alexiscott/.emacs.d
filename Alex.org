@@ -156,23 +156,23 @@ Logout and in again to take affect.
   #+begin_src emacs-lisp
 (setq exwm-input-simulation-keys
       '(
-	;; movement
-	([?\C-b] . [left])
-	([?\M-b] . [C-left])
-	([?\C-f] . [right])
-	([?\M-f] . [C-right])
-	([?\C-p] . [up])
-	([?\C-n] . [down])
-	([?\C-a] . [home])
-	([?\C-e] . [end])
-	([?\M-v] . [prior])
-	([?\C-v] . [next])
-	([?\C-d] . [delete])
-	([?\C-k] . [S-end delete])
-	;; cut/paste.
-	([?\C-w] . [?\C-x])
-	([?\M-w] . [?\C-c])
-	([?\C-y] . [?\C-v])))
+        ;; movement
+        ([?\C-b] . [left])
+        ([?\M-b] . [C-left])
+        ([?\C-f] . [right])
+        ([?\M-f] . [C-right])
+        ([?\C-p] . [up])
+        ([?\C-n] . [down])
+        ([?\C-a] . [home])
+        ([?\C-e] . [end])
+        ([?\M-v] . [prior])
+        ([?\C-v] . [next])
+        ([?\C-d] . [delete])
+        ([?\C-k] . [S-end delete])
+        ;; cut/paste.
+        ([?\C-w] . [?\C-x])
+        ([?\M-w] . [?\C-c])
+        ([?\C-y] . [?\C-v])))
   #+end_src
 
   For this to have worked you will need to be able to suspend without a password:
@@ -448,8 +448,8 @@ JS comint
 
 (setq custom-theme-directory "~/.emacs.d/poet")
 (add-hook 'text-mode-hook
-	   (lambda ()
-	    (variable-pitch-mode 1)))
+           (lambda ()
+            (variable-pitch-mode 1)))
 (load-theme 'poet-dark t)
 
 ;; Decent font size.
@@ -476,17 +476,17 @@ JS comint
 
 ;; syntax hilighting for midje
 (add-hook 'clojure-mode-hook
-	  (lambda ()
-	    (setq inferior-lisp-program "lein repl")
-	    (font-lock-add-keywords
-	     nil
-	     '(("(\\(facts?\\)"
-		(1 font-lock-keyword-face))
-	       ("(\\(background?\\)"
-		(1 font-lock-keyword-face))))
-	    (define-clojure-indent (fact 1))
-	    (define-clojure-indent (facts 1))
-	    (rainbow-delimiters-mode)))
+          (lambda ()
+            (setq inferior-lisp-program "lein repl")
+            (font-lock-add-keywords
+             nil
+             '(("(\\(facts?\\)"
+                (1 font-lock-keyword-face))
+               ("(\\(background?\\)"
+                (1 font-lock-keyword-face))))
+            (define-clojure-indent (fact 1))
+            (define-clojure-indent (facts 1))
+            (rainbow-delimiters-mode)))
 
 ;;;;
 ;; Cider
