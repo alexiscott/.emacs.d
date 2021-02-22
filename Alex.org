@@ -367,6 +367,13 @@ This promises to be a fast way to find things. Let's bind it to =Ctrl-Shift-S= t
 (use-package ob-async
 :ensure t)
 #+end_src
+
+Visual line mode for wrapping lines in org mode.
+#+begin_src emacs-lisp
+(with-eval-after-load 'org
+  ;;(setq org-startup-indented t)
+  (add-hook 'org-mode-hook #'visual-line-mode))
+#+end_src
 ** Coding
 *** Javascript
 
