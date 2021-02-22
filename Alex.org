@@ -266,50 +266,50 @@ Do we need ORG mode?
     (require 'helm-for-files)
     (setq helm-candidate-number-limit 100)
     (setq helm-completing-read-handlers-alist
-	  '((describe-function)
-	    (consult-bookmark)
-	    (consult-outline)
-	    (org-refile)
-	    (consult-line)
-	    (consult-mark)
-	    (consult-multi-occur)
-	    (describe-variable)
-	    (execute-extended-command)
-	    (consult-yank)))
+          '((describe-function)
+            (consult-bookmark)
+            (consult-outline)
+            (org-refile)
+            (consult-line)
+            (consult-mark)
+            (consult-multi-occur)
+            (describe-variable)
+            (execute-extended-command)
+            (consult-yank)))
     ;; From https://gist.github.com/antifuchs/9238468
     (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
-	  helm-input-idle-delay 0.01  ; this actually updates things
-					; reeeelatively quickly.
-	  helm-yas-display-key-on-candidate t
-	  helm-quick-update t
-	  helm-ff-file-name-history-use-recentf t
-	  helm-M-x-requires-pattern nil
-	  helm-ff-skip-boring-files t)
+          helm-input-idle-delay 0.01  ; this actually updates things
+                                        ; reeeelatively quickly.
+          helm-yas-display-key-on-candidate t
+          helm-quick-update t
+          helm-ff-file-name-history-use-recentf t
+          helm-M-x-requires-pattern nil
+          helm-ff-skip-boring-files t)
     (helm-mode))
   :config
   (defadvice helm-files-insert-as-org-links (around sacha activate)
     (insert (mapconcat (lambda (candidate)
-			 (org-link-make-string candidate))
-		       (helm-marked-candidates)
-		       "\n")))
+                         (org-link-make-string candidate))
+                       (helm-marked-candidates)
+                       "\n")))
   :bind (("C-c h" . helm-mini)
-	 ("C-h a" . helm-apropos)
-	 ("C-x C-b" . helm-buffers-list)
-	 ("C-x b" . helm-buffers-list)
-	 ("C-x C-f" . helm-find-files)
-	 ("M-y" . helm-show-kill-ring)
-	 ("C-x c o" . helm-occur)
-	 ("C-x c s" . helm-swoop)
-	 ("C-x c y" . helm-yas-complete)
-	 ("C-x c Y" . helm-yas-create-snippet-on-region)
-	 ("C-x c SPC" . helm-all-mark-rings)))
+         ("C-h a" . helm-apropos)
+         ("C-x C-b" . helm-buffers-list)
+         ("C-x b" . helm-buffers-list)
+         ("C-x C-f" . helm-find-files)
+         ("M-y" . helm-show-kill-ring)
+         ("C-x c o" . helm-occur)
+         ("C-x c s" . helm-swoop)
+         ("C-x c y" . helm-yas-complete)
+         ("C-x c Y" . helm-yas-create-snippet-on-region)
+         ("C-x c SPC" . helm-all-mark-rings)))
 (ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
 (use-package helm-ls-git)
 
 (setq helm-mini-default-sources '(helm-source-buffers-list
-				  helm-source-recentf
-				  helm-source-bookmarks
-				  helm-source-buffer-not-found))
+                                  helm-source-recentf
+                                  helm-source-bookmarks
+                                  helm-source-buffer-not-found))
 
 #+END_SRC
 
