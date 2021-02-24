@@ -310,7 +310,11 @@ Do we need ORG mode?
 #+begin_src emacs-lisp
   (setq global-auto-revert-mode t)
 #+end_src
-
+*** Helm AG
+#+begin_src emacs-lisp
+(use-package helm-ag
+:ensure t)
+#+end_src
 *** Helm-swoop - quickly finding lines
 
 This promises to be a fast way to find things. Let's bind it to =Ctrl-Shift-S= to see if I can get used to that...
