@@ -549,3 +549,12 @@ JS comint
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 ;; (add-hook 'ediff-prepare-buffer-hook #'show-all)
 #+end_src
+*** Lisp :racket:
+https://github.com/DEADB17/ob-racket/
+#+begin_src emacs-lisp
+(use-package ob-racket
+  :after org
+  :pin manual
+  :config
+  (append '((racket . t) (scribble . t)) org-babel-load-languages))
+#+end_src
