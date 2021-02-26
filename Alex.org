@@ -569,6 +569,7 @@ JS comint
 https://github.com/DEADB17/ob-racket/
 #+begin_src emacs-lisp
 (use-package ob-racket
+  :ensure t
   :after org
   :pin manual
   :config
