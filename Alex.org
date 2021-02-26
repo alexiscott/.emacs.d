@@ -380,6 +380,12 @@ Visual line mode for wrapping lines in org mode.
   ;;(setq org-startup-indented t)
   (add-hook 'org-mode-hook #'visual-line-mode))
 #+end_src
+
+#+begin_src emacs-lisp
+  (use-package org-pomodoro
+    :ensure t)
+#+end_src
+
 ** Coding
 *** Javascript
 
