@@ -352,7 +352,8 @@ This promises to be a fast way to find things. Let's bind it to =Ctrl-Shift-S= t
   :config
   (pdf-tools-install :no-query))
 
-(use-package org-noter)
+(use-package org-noter
+:ensure t)
 #+end_src
 
 *** Browser
