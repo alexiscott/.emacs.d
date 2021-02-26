@@ -454,6 +454,10 @@ JS comint
 #+begin_src emacs-lisp
 (add-hook 'before-save-hook #'whitespace-cleanup)
 #+end_src
+*** No hard tabs
+#+begin_src emacs-lisp
+(setq-default indent-tabs-mode nil)
+#+end_src
 
 *** Theme
 #+begin_src emacs-lisp
