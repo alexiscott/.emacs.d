@@ -104,6 +104,10 @@ Enable y/n answers
     #+begin_src emacs-lisp
     (global-set-key "\M- " 'hippie-expand)
     #+end_src
+*** Expand region
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-c e") 'er/expand-region)
+#+end_src
 *** Recent files
 
 #+BEGIN_SRC emacs-lisp
@@ -356,7 +360,7 @@ This promises to be a fast way to find things. Let's bind it to =Ctrl-Shift-S= t
 :ensure t)
 #+end_src
 
-*** Browser
+*** Browser                                                          :eww:
 #+begin_src emacs-lisp
   ;; (setq browse-url-browser-function 'eww-browse-url)
   (setq browse-url-browser-function '(
@@ -366,6 +370,7 @@ This promises to be a fast way to find things. Let's bind it to =Ctrl-Shift-S= t
   (".*.harvestapp.com.*" . browse-url-firefox)
   (".*calendar.google.com.*" . browse-url-firefox)
   ("." . eww-browse-url)))
+  (setq eww-readable t)
 #+end_src
 
 *** Org
@@ -379,11 +384,14 @@ Visual line mode for wrapping lines in org mode.
 (with-eval-after-load 'org
   ;;(setq org-startup-indented t)
   (add-hook 'org-mode-hook #'visual-line-mode))
+(add-hook 'text-mode-hook #'visual-line-mode)
 #+end_src
 
 #+begin_src emacs-lisp
   (use-package org-pomodoro
-    :ensure t)
+    :ensure t
+    :config
+    (global-set-key (kbd "C-c P") 'org-pomodoro))
 #+end_src
 
 ** Coding
