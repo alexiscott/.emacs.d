@@ -394,6 +394,11 @@ Visual line mode for wrapping lines in org mode.
     (global-set-key (kbd "C-c P") 'org-pomodoro))
 #+end_src
 
+*** Dired
+    #+begin_src emacs-lisp
+    (setq dired-dwim-target t)
+    #+end_src
+
 ** Coding
 *** Javascript
 
