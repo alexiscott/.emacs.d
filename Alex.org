@@ -142,7 +142,7 @@ Enable y/n answers
 (use-package markdown-mode
   :ensure t)
 
-*** EXMW
+*** EXWM
 #+begin_src emacs-lisp
 (use-package exwm)
 (use-package exwm-firefox-core
@@ -176,7 +176,13 @@ Logout and in again to take affect.
         ;; cut/paste.
         ([?\C-w] . [?\C-x])
         ([?\M-w] . [?\C-c])
-        ([?\C-y] . [?\C-v])))
+        ([?\C-y] . [?\C-v])
+        ;; Search
+        ([?\C-s] . [?\C-f])))
+
+
+        (exwm-input-set-key (kbd "s-p") 'exwm-input-toggle-keyboard)
+
   #+end_src
 
   For this to have worked you will need to be able to suspend without a password:
@@ -184,6 +190,42 @@ Logout and in again to take affect.
  (exwm-input-set-key (kbd "s-<f12>")
  (lambda () (interactive) (start-process "" nil "sudo" "pm-suspend")))
  #+end_src
+
+****  Org capture url                                                  :exwm:
+ https://elmord.org/blog/?entry=20180214-exwm-org-capture
+   #+begin_src emacs-lisp
+
+ (defun elmord-exwm-get-firefox-url ()
+   (exwm-input--fake-key ?\C-l)
+   (sleep-for 0.05)                      ; Wait a bit for the browser to respond.
+   (exwm-input--fake-key ?\C-c)
+   (sleep-for 0.05)
+   (gui-backend-get-selection 'CLIPBOARD 'STRING))
+
+
+ (defun elmord-exwm-org-store-link ()
+   (when (and (equal major-mode 'exwm-mode)
+              (member exwm-class-name '("Firefox")))
+     (org-store-link-props
+      :type "http"
+      :link (elmord-exwm-get-firefox-url)
+      :description exwm-title)))
+
+
+;; (org-link-set-parameters "firefox" :store 'elmord-exwm-org-store-link)
+
+   #+end_src
+
+
+   #+RESULTS:
+   | :store | elmord-exwm-org-store-link |
+
+*** Documentation                                             :documentation:
+    When you call org-capture and use a template the includes a link and a description, then both will be added to the capture results.
+
+
+
+
 
 *** Super
 #+begin_src emacs-lisp
@@ -579,12 +621,44 @@ JS comint
 ;; (add-hook 'ediff-prepare-buffer-hook #'show-all)
 #+end_src
 *** Lisp :racket:
+
+Will need the file added as elisp.
+
 https://github.com/DEADB17/ob-racket/
 #+begin_src emacs-lisp
-(use-package ob-racket
-  :ensure t
-  :after org
-  :pin manual
-  :config
-  (append '((racket . t) (scribble . t)) org-babel-load-languages))
+  ;; (use-package ob-racket
+  ;;   :ensure t
+  ;;   :after org
+  ;;   :pin manual
+  ;;   :config
+  ;;   (append '((racket . t) (scribble . t)) org-babel-load-languages))
+#+end_src
+
+* Test                                                                 :exwm:
+https://emacs.stackexchange.com/questions/53531/emacs-and-exwm-window-manager-switch-between-applications-and-emacs-buffer
+#+begin_src emacs-lisp
+
+(setq exwm-input-global-keys
+     `(
+     ;; Move around
+     (,(kbd "s-<up>") . windmove-up)
+     (,(kbd "s-<down>") . windmove-down)
+     (,(kbd "s-<left>") . windmove-left)
+     (,(kbd "s-<right>") . windmove-right)
+     ;; 's-r': Reset (to line-mode).
+     ([?\s-r] . exwm-reset)
+     ;; 's-w': Switch workspace.
+     ([?\s-w] . exwm-workspace-switch)
+     ;; 's-&': Launch application.
+     ([?\s-&] . (lambda (command)
+     (interactive (list (read-shell-command "$ ")))
+     (start-process-shell-command command nil command)))
+     ;; 's-N': Switch to certain workspace.
+     ,@(mapcar (lambda (i)
+     `(,(kbd (format "s-%d" i)) .
+     (lambda ()
+     (interactive)
+     (exwm-workspace-switch-create ,i))))
+     (number-sequence 0 9))))
+
 #+end_src
