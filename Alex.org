@@ -222,11 +222,16 @@ Logout and in again to take affect.
 
 *** Documentation                                             :documentation:
     When you call org-capture and use a template the includes a link and a description, then both will be added to the capture results.
-
-
-
-
-
+*** Shortcuts for frecuent commands.
+#+begin_src emacs-lisp
+(defalias 'oc 'org-capture)
+(defalias 'oa 'org-agenda)
+(defalias 'gf 'grep-find)
+(defalias 'fd 'find-dired)
+(defalias 'ms 'magit-status)
+;; What does it take to make this work
+(defalias 'fnd 'find-name-dired)
+#+end_src
 *** Super
 #+begin_src emacs-lisp
   (if  (file-exists-p "~/super.el")
