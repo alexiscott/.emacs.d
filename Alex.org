@@ -108,6 +108,40 @@ Enable y/n answers
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-c e") 'er/expand-region)
 #+end_src
+*** Ace jump mode
+#+begin_src emacs-lisp
+  ;; (use-package ace-jump
+  ;; :ensure t
+  ;; :config
+  ;; (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+  ;; )
+#+end_src
+*** Ace window
+#+begin_src emacs-lisp
+  ;; (use-package ace-window
+  ;; :config
+  ;; (global-set-key (kbd "M-o") 'ace-window)
+  ;;   :ensure t)
+#+end_src
+*** Ace window
+#+begin_src emacs-lisp
+(use-package winum
+:init
+(winum-mode)
+:ensure t)
+#+end_src
+*** Multiple cursors
+#+begin_src emacs-lisp
+(use-package multiple-cursors
+:config
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C-S-q") 'mc/keyboard-quit)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+:ensure t)
+#+end_src
 *** Recent files
 
 #+BEGIN_SRC emacs-lisp
@@ -139,8 +173,17 @@ Enable y/n answers
 (keychain-refresh-environment)
 #+END_SRC
 
+
+#+begin_src emacs-lisp
 (use-package markdown-mode
-  :ensure t)
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.mdx\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+#+end_src
 
 *** EXWM
 #+begin_src emacs-lisp
@@ -343,16 +386,9 @@ Do we need ORG mode?
                          (org-link-make-string candidate))
                        (helm-marked-candidates)
                        "\n")))
-  :bind (("C-c h" . helm-mini)
-         ("C-h a" . helm-apropos)
-         ("C-x C-b" . helm-buffers-list)
-         ("C-x b" . helm-buffers-list)
-         ("C-x C-f" . helm-find-files)
-         ("M-y" . helm-show-kill-ring)
-         ("C-x c o" . helm-occur)
-         ("C-x c s" . helm-swoop)
-         ("C-x c y" . helm-yas-complete)
-         ("C-x c Y" . helm-yas-create-snippet-on-region)
+  :bind (("C-c h" . helm-command-prefix)
+         ("b" . helm-buffers-list)
+         ("s" . helm-swoop) ;; Already included in command li
          ("C-x c SPC" . helm-all-mark-rings)))
 (ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
 (use-package helm-ls-git)
@@ -444,8 +480,26 @@ I like js2-mode.
 #+begin_src emacs-lisp
 
   (setq js-indent-level 2)
+
   (use-package tagedit
   :ensure t)
+
+(eval-after-load 'sgml-mode
+  '(progn
+     (require 'tagedit)
+     (tagedit-add-paredit-like-keybindings)
+     (add-hook 'html-mode-hook (lambda () (tagedit-mode 1)))))
+
+(define-key html-mode-map (kbd "C-<right>") 'tagedit-forward-slurp-tag)
+(define-key html-mode-map (kbd "C-<left>") 'tagedit-forward-barf-tag)
+(define-key html-mode-map (kbd "M-r") 'tagedit-raise-tag)
+(define-key html-mode-map (kbd "M-s") 'tagedit-splice-tag)
+(define-key html-mode-map (kbd "M-J") 'tagedit-join-tags)
+(define-key html-mode-map (kbd "M-S") 'tagedit-split-tag)
+(define-key html-mode-map (kbd "M-?") 'tagedit-convolute-tags)
+(define-key html-mode-map (kbd "C-k") 'tagedit-kill)
+(define-key html-mode-map (kbd "s-k") 'tagedit-kill-attribute)
+
 
   (add-to-list 'auto-mode-alist '("\\.js\\'\\|\\.json\\'" . js2-mode))
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . js2-mode))
@@ -640,6 +694,7 @@ https://emacs.stackexchange.com/questions/53531/emacs-and-exwm-window-manager-sw
      (,(kbd "s-<down>") . windmove-down)
      (,(kbd "s-<left>") . windmove-left)
      (,(kbd "s-<right>") . windmove-right)
+     (,(kbd "s-o") . 'ace-window)
      ;; 's-r': Reset (to line-mode).
      ([?\s-r] . exwm-reset)
      ;; 's-w': Switch workspace.
