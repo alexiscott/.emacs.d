@@ -408,17 +408,7 @@ This promises to be a fast way to find things. Let's bind it to =Ctrl-Shift-S= t
 #+end_src
 
 *** Browser                                                          :eww:
-#+begin_src emacs-lisp
-  ;; (setq browse-url-browser-function 'eww-browse-url)
-  (setq browse-url-browser-function '(
-  (".*youtube.*" . browse-url-firefox)
-  (".*github.com.*" . browse-url-firefox)
-  (".*mail.google.com.*" . browse-url-firefox)
-  (".*.harvestapp.com.*" . browse-url-firefox)
-  (".*calendar.google.com.*" . browse-url-firefox)
-  ("." . eww-browse-url)))
-  (setq eww-readable t)
-#+end_src
+Set EWW readable.
 
 *** Org
 #+begin_src emacs-lisp
