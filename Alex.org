@@ -173,7 +173,6 @@ Enable y/n answers
 (keychain-refresh-environment)
 #+END_SRC
 
-
 #+begin_src emacs-lisp
 (use-package markdown-mode
   :ensure t
@@ -537,7 +536,7 @@ JS comint
     (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
     (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
     (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
-    (add-hook 'js-mode-hook               #'enable-paredit-mode)
+;;    (add-hook 'js-mode-hook               #'enable-paredit-mode) Messes with JXS
     (add-hook 'js2-mode-hook               #'enable-paredit-mode)
     (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
     (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
