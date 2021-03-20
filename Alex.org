@@ -386,10 +386,7 @@ Do we need ORG mode?
                          (org-link-make-string candidate))
                        (helm-marked-candidates)
                        "\n")))
-  :bind (("C-c h" . helm-command-prefix)
-         ("b" . helm-buffers-list)
-         ("s" . helm-swoop) ;; Already included in command li
-         ("C-x c SPC" . helm-all-mark-rings)))
+  :bind (("C-c h" . helm-command-prefix)))
 (ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
 (use-package helm-ls-git)
 
@@ -464,7 +461,7 @@ Visual line mode for wrapping lines in org mode.
   (use-package org-pomodoro
     :ensure t
     :config
-    (global-set-key (kbd "C-c P") 'org-pomodoro))
+    (global-set-key (kbd "<f12>") 'org-pomodoro))
 #+end_src
 
 *** Dired
