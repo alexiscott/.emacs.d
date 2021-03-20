@@ -688,6 +688,14 @@ https://github.com/DEADB17/ob-racket/
   ;;   (append '((racket . t) (scribble . t)) org-babel-load-languages))
 #+end_src
 
+** Yasnippet
+#+begin_src emacs-lisp
+(use-package yasnippet
+:ensure t
+:init
+(yas-global-mode))
+#+end_src
+
 * Test                                                                 :exwm:
 https://emacs.stackexchange.com/questions/53531/emacs-and-exwm-window-manager-switch-between-applications-and-emacs-buffer
 #+begin_src emacs-lisp
