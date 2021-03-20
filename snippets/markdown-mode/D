@@ -1,0 +1,35 @@
+# -*- mode: snippet -*-
+# name: D
+# key: D
+# --
+
+---
+name: $1
+menu: Components
+route: /components/$1
+---
+
+import { Playground, Props } from 'docz'
+import $1 from './index'
+
+# $1 Docs
+
+$1 $2
+
+## Basic usage
+<Playground>
+  <div>
+  $3
+  </div>
+</Playground>
+
+## $1 Variants
+<Playground>
+  <div>
+  $4
+  </div>
+</Playground>
+
+
+## Properties
+<Props of={$1} />

@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# name: Storybook story
+# key: S
+# --
+
+
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import $1 from './index';
+
+<Meta title="USWDS/$1" component={$1} />
+
+# $1
+
+<Canvas>
+    <Story name="Basic">
+      <ul className="usa-$1-group">
+        <$1
+          $2="$1 Title"
+        />
+      </ul>
+    </Story>
+</Canvas>
