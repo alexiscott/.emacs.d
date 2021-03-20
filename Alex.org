@@ -463,6 +463,18 @@ Visual line mode for wrapping lines in org mode.
     (global-set-key (kbd "<f12>") 'org-pomodoro))
 #+end_src
 
+*** Org brain
+#+begin_src emacs-lisp
+(use-package org-brain :ensure t
+  :config
+  (bind-key "C-c b" 'org-brain-prefix-map org-mode-map);; binds in org mode.
+  ;; (push '("b" "Brain" plain (function org-brain-goto-end)
+  ;;         "* %i%?" :empty-lines 1)
+  ;;       org-capture-templates)
+ (setq org-brain-title-max-length 16))
+#+end_src
+
+
 *** Dired
     #+begin_src emacs-lisp
     (setq dired-dwim-target t)
