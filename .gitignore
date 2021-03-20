@@ -17,3 +17,5 @@ eww-bookmarks
 request
 emojis/
 *~
+.mc-lists.el
+.org-id-locations
