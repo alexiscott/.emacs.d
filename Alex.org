@@ -474,6 +474,12 @@ Visual line mode for wrapping lines in org mode.
  (setq org-brain-title-max-length 16))
 #+end_src
 
+*** Polymode.
+#+begin_src emacs-lisp
+  (use-package polymode :ensure t
+    :config
+    (add-hook 'org-brain-visualize-mode-hook #'org-brain-polymode))
+#+end_src
 
 *** Dired
     #+begin_src emacs-lisp
