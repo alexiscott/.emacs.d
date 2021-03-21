@@ -19,3 +19,7 @@ emojis/
 *~
 .mc-lists.el
 .org-id-locations
+org-roam.db
+cider-history
+emms/
+racket-mode/
