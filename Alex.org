@@ -476,9 +476,10 @@ Visual line mode for wrapping lines in org mode.
 
 *** Polymode.
 #+begin_src emacs-lisp
-  (use-package polymode :ensure t
-    :config
-    (add-hook 'org-brain-visualize-mode-hook #'org-brain-polymode))
+  ;; (use-package polymode
+  ;; :ensure t
+  ;; :config
+  ;; (add-hook 'org-brain-visualize-mode-hook #'org-brain-polymode))
 #+end_src
 
 *** Dired
