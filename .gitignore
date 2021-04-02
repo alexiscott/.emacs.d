@@ -23,3 +23,5 @@ org-roam.db
 cider-history
 emms/
 racket-mode/
+.recentf
+.smex-items
