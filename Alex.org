@@ -489,6 +489,18 @@ Visual line mode for wrapping lines in org mode.
   ;;       org-capture-templates)
  (setq org-brain-title-max-length 16))
 #+end_src
+*** Org indent mode
+
+#+begin_src emacs-lisp
+  (add-hook 'org-mode-hook 'org-indent-mode)
+#+end_src
+*** Org bullets
+#+begin_src emacs-lisp
+      (use-package org-bullets
+        :ensure t
+        :config
+        (add-hook 'org-mode-hook #'org-bullets-mode))
+#+end_src
 
 *** Polymode.
 #+begin_src emacs-lisp
