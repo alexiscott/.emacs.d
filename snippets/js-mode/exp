@@ -1,5 +1,6 @@
-# -*- mode: snippet -*-
+# -*- mode: snippet; require-final-newline: nil -*-
 # name: exp
 # key: exp
+# uuid: exp
 # --
-expect($1).$2
+export default $1`(if (eolp) (js-react-redux-yasnippets-semicolon))`

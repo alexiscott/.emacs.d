@@ -1,8 +1,8 @@
 # -*- mode: snippet; require-final-newline: nil -*-
-# name: Testing `describe` block
-# key: desc
-# uuid: desc
+# name: rnstyle
+# key: rnstyle
+# uuid: rnstyle
 # --
-describe('$1', () => {
+const styles = StyleSheet.create({
  $0
 })`(js-react-redux-yasnippets-semicolon)`

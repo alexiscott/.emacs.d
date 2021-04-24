@@ -8,16 +8,11 @@ import PropTypes from 'prop-types';
 
 const $1 = ({
 }) => {
-
   return ("$2")
-}
+};
 
-$1.defaultProps = {
+$1.defaultProps = {};
 
-}
-
-$1.propTypes = {
-
-}
+$1.propTypes = {};
 
 export default $1;

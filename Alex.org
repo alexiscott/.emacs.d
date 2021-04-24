@@ -173,15 +173,20 @@ Enable y/n answers
 (keychain-refresh-environment)
 #+END_SRC
 
+*** Markdown
 #+begin_src emacs-lisp
-(use-package markdown-mode
-  :ensure t
-  :commands (markdown-mode gfm-mode)
-  :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . markdown-mode)
-         ("\\.mdx\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
+
+  (use-package ox-gfm
+  :ensure t)
+
+    (use-package markdown-mode
+      :ensure t
+      :commands (markdown-mode gfm-mode)
+      :mode (("README\\.md\\'" . gfm-mode)
+             ("\\.md\\'" . markdown-mode)
+             ("\\.mdx\\'" . markdown-mode)
+             ("\\.markdown\\'" . markdown-mode))
+      :init (setq markdown-command "multimarkdown"))
 #+end_src
 
 *** EXWM
@@ -266,18 +271,27 @@ Logout and in again to take affect.
     When you call org-capture and use a template the includes a link and a description, then both will be added to the capture results.
 *** Shortcuts for frecuent commands.
 #+begin_src emacs-lisp
-(defalias 'oc 'org-capture)
-(defalias 'oa 'org-agenda)
-(defalias 'gf 'grep-find)
-(defalias 'fd 'find-dired)
-(defalias 'ms 'magit-status)
-;; What does it take to make this work
-(defalias 'fnd 'find-name-dired)
+    (defalias 'oc 'org-capture)
+  (defalias 'oa 'org-agenda)
+  (defalias 'lp 'list-processes)
+  (defalias 'ogc 'org-cliplink)
+    (defalias 'gf 'grep-find)
+    (defalias 'fd 'find-dired)
+    (defalias 'ff 'find-file)
+    (defalias 'ms 'magit-status)
+    ;; What does it take to make this work
+    (defalias 'fnd 'find-name-dired)
 #+end_src
 *** Super
 #+begin_src emacs-lisp
-  (if  (file-exists-p "~/super.el")
-      (load "~/super.el"))
+    (if  (file-exists-p "~/super.el")
+        (load "~/super.el"))
+
+  (if  (file-exists-p "~/elisp/js-react-redux-yasnippets.el")
+      (load "~/elisp/js-react-redux-yasnippets.el"))
+
+
+
 #+end_src
 
 *** Backups
@@ -327,7 +341,7 @@ Do we need ORG mode?
 
 #+END_SRC
 
-*** Magit
+*** Magit and  code source.
 #+BEGIN_SRC emacs-lisp
 (use-package magit
 :ensure t
@@ -335,64 +349,85 @@ Do we need ORG mode?
 ("C-c g" . magit-file-dispatch))
 #+END_SRC
 
-***  Project navigation.
 #+begin_src emacs-lisp
-(use-package projectile
-  :diminish projectile-mode
-  :config
-  (progn
-    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-    (projectile-mode +1)
-    (setq projectile-completion-system 'default)
-    (setq projectile-enable-caching t)
-    (setq projectile-indexing-method 'alien)
-    (add-to-list 'projectile-globally-ignored-files "node-modules")))
-(use-package helm-projectile)
+  (use-package forge
+    :ensure t
+    :after magit)
+
+  (use-package orgit-forge
+    :ensure t
+    :after magit)
 #+end_src
 
-#+BEGIN_SRC emacs-lisp
-(use-package helm
-  :diminish helm-mode
-  :init
-  (progn
-    (require 'helm-config)
-    (require 'helm-for-files)
-    (setq helm-candidate-number-limit 100)
-    (setq helm-completing-read-handlers-alist
-          '((describe-function)
-            (consult-bookmark)
-            (consult-outline)
-            (org-refile)
-            (consult-line)
-            (consult-mark)
-            (consult-multi-occur)
-            (describe-variable)
-            (execute-extended-command)
-            (consult-yank)))
-    ;; From https://gist.github.com/antifuchs/9238468
-    (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
-          helm-input-idle-delay 0.01  ; this actually updates things
-                                        ; reeeelatively quickly.
-          helm-yas-display-key-on-candidate t
-          helm-quick-update t
-          helm-ff-file-name-history-use-recentf t
-          helm-M-x-requires-pattern nil
-          helm-ff-skip-boring-files t)
-    (helm-mode))
-  :config
-  (defadvice helm-files-insert-as-org-links (around sacha activate)
-    (insert (mapconcat (lambda (candidate)
-                         (org-link-make-string candidate))
-                       (helm-marked-candidates)
-                       "\n")))
-  :bind (("C-c h" . helm-command-prefix)))
-(ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
-(use-package helm-ls-git)
+***  Project navigation.
+#+begin_src emacs-lisp
 
-(setq helm-mini-default-sources '(helm-source-buffers-list
-                                  helm-source-recentf
-                                  helm-source-bookmarks
-                                  helm-source-buffer-not-found))
+  (use-package ag
+    :ensure t)
+
+    ;; https://www.manueluberti.eu/emacs/2019/11/16/helm/
+    ;; https://github.com/emacs-helm/helm-ls-git
+      (use-package helm-ls-git
+      :ensure t)
+
+
+  (global-set-key (kbd "C-c h P") 'helm-browse-project)
+  (global-set-key (kbd "C-c h H") 'helm-projects-history)
+  (global-set-key (kbd "C-x C-d") 'helm-browse-project)
+
+
+
+  #+end_src
+
+https://emacs-helm.github.io/helm/
+#+BEGIN_SRC emacs-lisp
+    (use-package helm
+      :diminish helm-mode
+      :init
+      (progn
+        (require 'helm-config)
+        (require 'helm-for-files)
+        (setq helm-candidate-number-limit 100)
+        (setq helm-completing-read-handlers-alist
+              '((describe-function)
+                (consult-bookmark)
+                (consult-outline)
+                (org-refile)
+                (consult-line)
+                (consult-mark)
+                (consult-multi-occur)
+                (describe-variable)
+                (execute-extended-command)
+                (consult-yank)))
+        ;; From https://gist.github.com/antifuchs/9238468
+        (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
+              helm-input-idle-delay 0.01  ; this actually updates things
+                                            ; reeeelatively quickly.
+              helm-yas-display-key-on-candidate t
+              helm-quick-update t
+              helm-ff-file-name-history-use-recentf t
+              helm-M-x-requires-pattern nil
+              helm-ff-skip-boring-files t)
+        (helm-mode))
+      :config
+      (defadvice helm-files-insert-as-org-links (around sacha activate)
+        (insert (mapconcat (lambda (candidate)
+                             (org-link-make-string candidate))
+                           (helm-marked-candidates)
+                           "\n")))
+      :bind (("C-c h" . helm-command-prefix)))
+    (ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
+    (use-package helm-ls-git)
+
+    (setq helm-mini-default-sources '(helm-source-buffers-list
+                                      helm-source-recentf
+                                      helm-source-bookmarks
+                                      helm-source-buffer-not-found))
+
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+
+
 
 #+END_SRC
 
@@ -469,8 +504,6 @@ Visual line mode for wrapping lines in org mode.
       :ensure t
       :hook
       (after-init . org-roam-mode)
-      :custom
-      (org-roam-directory "~/Documents/ORG")
       :bind (:map org-roam-mode-map
               (("C-c n l" . org-roam)
                ("C-c n f" . org-roam-find-file)
@@ -518,40 +551,53 @@ Visual line mode for wrapping lines in org mode.
 ** Coding
 *** Javascript
 
-I like js2-mode.
+I like js and js2-modes.
 
 #+begin_src emacs-lisp
 
-  (setq js-indent-level 2)
+          (setq js-indent-level 2)
+          (setq js-switch-indent-offset 2)
 
-  (use-package tagedit
-  :ensure t)
+            (use-package tagedit
+            :ensure t)
 
-(eval-after-load 'sgml-mode
-  '(progn
-     (require 'tagedit)
-     (tagedit-add-paredit-like-keybindings)
-     (add-hook 'html-mode-hook (lambda () (tagedit-mode 1)))))
+          (eval-after-load 'sgml-mode
+            '(progn
+               (require 'tagedit)
+               (tagedit-add-paredit-like-keybindings)
+               (add-hook 'html-mode-hook (lambda () (tagedit-mode 1)))))
 
-(define-key html-mode-map (kbd "C-<right>") 'tagedit-forward-slurp-tag)
-(define-key html-mode-map (kbd "C-<left>") 'tagedit-forward-barf-tag)
-(define-key html-mode-map (kbd "M-r") 'tagedit-raise-tag)
-(define-key html-mode-map (kbd "M-s") 'tagedit-splice-tag)
-(define-key html-mode-map (kbd "M-J") 'tagedit-join-tags)
-(define-key html-mode-map (kbd "M-S") 'tagedit-split-tag)
-(define-key html-mode-map (kbd "M-?") 'tagedit-convolute-tags)
-(define-key html-mode-map (kbd "C-k") 'tagedit-kill)
-(define-key html-mode-map (kbd "s-k") 'tagedit-kill-attribute)
+          (define-key html-mode-map (kbd "C-<right>") 'tagedit-forward-slurp-tag)
+          (define-key html-mode-map (kbd "C-<left>") 'tagedit-forward-barf-tag)
+          (define-key html-mode-map (kbd "M-r") 'tagedit-raise-tag)
+          (define-key html-mode-map (kbd "M-s") 'tagedit-splice-tag)
+          (define-key html-mode-map (kbd "M-J") 'tagedit-join-tags)
+          (define-key html-mode-map (kbd "M-S") 'tagedit-split-tag)
+          (define-key html-mode-map (kbd "M-?") 'tagedit-convolute-tags)
+          (define-key html-mode-map (kbd "C-k") 'tagedit-kill)
+          (define-key html-mode-map (kbd "s-k") 'tagedit-kill-attribute)
 
 
-  (add-to-list 'auto-mode-alist '("\\.js\\'\\|\\.json\\'" . js2-mode))
-  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . js2-mode))
+            (add-to-list 'auto-mode-alist '("\\.js\\'\\|\\.json\\'" . js2-mode))
+            (add-to-list 'auto-mode-alist '("\\.tsx\\'" . js2-mode))
 
-  (eval-after-load "sgml-mode"
-    '(progn
-       (require 'tagedit)
-       (tagedit-add-paredit-like-keybindings)
-       (add-hook 'html-mode-hook (lambda () (tagedit-mode 1)))))
+
+
+            (eval-after-load "sgml-mode"
+              '(progn
+                 (require 'tagedit)
+                 (tagedit-add-paredit-like-keybindings)
+                 (add-hook 'html-mode-hook (lambda () (tagedit-mode 1)))))
+
+        (add-hook 'js2-mode-hook
+                  (lambda () (flycheck-mode t)))
+
+;; js2 refactor
+      (use-package js2-refactor
+      :ensure t)
+    (js2r-add-keybindings-with-prefix "C-c C-m")
+  (add-hook 'js2-mode-hook #'js2-refactor-mode)
+
 #+end_src
 
 #+begin_src emacs-lisp
@@ -575,33 +621,37 @@ JS comint
 #+end_src
 *** Paredit
 #+begin_src  emacs-lisp
-  (use-package paredit
-    :ensure t
-    :init
-    (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
-    (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
-    (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
-    (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
-    (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
-;;    (add-hook 'js-mode-hook               #'enable-paredit-mode) Messes with JXS
-    (add-hook 'js2-mode-hook               #'enable-paredit-mode)
-    (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-    (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+        (use-package paredit
+          :ensure t
+          :init
+          (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+          (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+          (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+          (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+          (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+      ;;    (add-hook 'js-mode-hook               #'enable-paredit-mode) Messes with JXS
+          (add-hook 'js2-mode-hook               #'enable-paredit-mode)
+          (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+          (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
 
-    ;; eldoc-mode shows documentation in the minibuffer when writing code
-    ;; http://www.emacswiki.org/emacs/ElDoc
-    (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-    (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
-    (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode))
+          ;; eldoc-mode shows documentation in the minibuffer when writing code
+          ;; http://www.emacswiki.org/emacs/ElDoc
+          (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+          (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
+          (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode))
 
+    ;; (use-package autopairs
+    ;; :ensure t)
+;; Built into emacs.
+  (electric-pair-mode t)
 
-(defun ais-paredit-nonlisp ()
-  "Turn on paredit mode for non-lisps."
-  (interactive)
-  (set (make-local-variable 'paredit-space-for-delimiter-predicates)
-       '((lambda (endp delimiter) nil)))
-  (paredit-mode 1))
-(add-hook 'js-mode-hook 'ais-paredit-nonlisp)
+      (defun ais-paredit-nonlisp ()
+        "Turn on paredit mode for non-lisps."
+        (interactive)
+        (set (make-local-variable 'paredit-space-for-delimiter-predicates)
+             '((lambda (endp delimiter) nil)))
+        (paredit-mode 1))
+      (add-hook 'js2-mode-hook 'ais-paredit-nonlisp)
 
 #+end_src
 *** Whitespace
@@ -617,14 +667,14 @@ JS comint
 *** Theme
 #+begin_src emacs-lisp
 
-(setq custom-theme-directory "~/.emacs.d/poet")
-(add-hook 'text-mode-hook
-           (lambda ()
-            (variable-pitch-mode 1)))
-(load-theme 'poet-dark t)
+  (setq custom-theme-directory "~/.emacs.d/poet")
+  ;; (add-hook 'text-mode-hook
+  ;;            (lambda ()
+  ;;             (variable-pitch-mode 1)))
+  ;; (load-theme 'poet-dark t)
 
-;; Decent font size.
-(set-face-attribute 'default nil :height 140)
+  ;; Decent font size.
+  (set-face-attribute 'default nil :height 140)
 #+end_src
 
 *** Clojure

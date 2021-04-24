@@ -1,8 +1,8 @@
 # -*- mode: snippet; require-final-newline: nil -*-
-# name: Testing `describe` block
-# key: desc
-# uuid: desc
+# name: prom
+# key: prom
+# uuid: prom
 # --
-describe('$1', () => {
+return new Promise((resolve, reject) => {
  $0
 })`(js-react-redux-yasnippets-semicolon)`
