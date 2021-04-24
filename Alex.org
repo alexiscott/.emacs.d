@@ -667,14 +667,14 @@ JS comint
 *** Theme
 #+begin_src emacs-lisp
 
-  (setq custom-theme-directory "~/.emacs.d/poet")
-  ;; (add-hook 'text-mode-hook
-  ;;            (lambda ()
-  ;;             (variable-pitch-mode 1)))
-  ;; (load-theme 'poet-dark t)
+  ;; (setq custom-theme-directory "~/.emacs.d/poet")
+   ;; (add-hook 'text-mode-hook
+   ;;            (lambda ()
+   ;;             (variable-pitch-mode 1)))
+   ;; (load-theme 'poet-dark t)
 
-  ;; Decent font size.
-  (set-face-attribute 'default nil :height 140)
+   ;; Decent font size.
+   ;; (set-face-attribute 'default nil :height 140)
 #+end_src
 
 *** Clojure
