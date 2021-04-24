@@ -369,14 +369,9 @@ Do we need ORG mode?
     ;; https://github.com/emacs-helm/helm-ls-git
       (use-package helm-ls-git
       :ensure t)
-
-
   (global-set-key (kbd "C-c h P") 'helm-browse-project)
   (global-set-key (kbd "C-c h H") 'helm-projects-history)
   (global-set-key (kbd "C-x C-d") 'helm-browse-project)
-
-
-
   #+end_src
 
 https://emacs-helm.github.io/helm/
